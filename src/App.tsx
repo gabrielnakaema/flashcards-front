@@ -1,11 +1,11 @@
-import { AppBar, Toolbar, Link, Typography } from "@material-ui/core";
+import { AppBar, Toolbar, Link, Typography } from '@material-ui/core';
 import {
   BrowserRouter as Router,
   Link as RouterLink,
   Switch,
   Route,
-} from "react-router-dom";
-import { DeckTable } from "./components/DeckTable";
+} from 'react-router-dom';
+import { DeckTable } from './components/DeckTable';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
               component={RouterLink}
               to="/"
               color="inherit"
-              style={{ textDecoration: "none" }}
+              style={{ textDecoration: 'none' }}
             >
               Flashcards
             </Link>

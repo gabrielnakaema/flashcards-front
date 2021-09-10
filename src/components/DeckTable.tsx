@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   Table,
   TableHead,
   TableBody,
   TableRow,
   TableCell,
-} from "@material-ui/core";
-import { getDecks } from "../services/deckService";
-import { Deck } from "../types";
+} from '@material-ui/core';
+import { getDecks } from '../services/deckService';
+import { Deck } from '../types';
 
 export const DeckTable = () => {
   const [decks, setDecks] = useState<Deck[]>([]);

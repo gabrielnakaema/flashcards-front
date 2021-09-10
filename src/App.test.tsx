@@ -1,9 +1,9 @@
-import { render, screen } from "@testing-library/react";
-import App from "./App";
+import { render, screen } from '@testing-library/react';
+import App from './App';
 
-it("should render flashcards title", () => {
+it('should render flashcards title', () => {
   render(<App />);
   const linkElement = screen.getByText(/Flashcards/i);
   expect(linkElement).toBeInTheDocument();
-  expect(linkElement).toHaveAttribute("href", "/");
+  expect(linkElement).toHaveAttribute('href', '/');
 });
