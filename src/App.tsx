@@ -5,6 +5,7 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import { DeckDetail } from './components/DeckDetail';
 import { DeckTable } from './components/DeckTable';
 
 function App() {
@@ -25,6 +26,9 @@ function App() {
         </Toolbar>
       </AppBar>
       <Switch>
+        <Route path="/decks/:deckId">
+          <DeckDetail />
+        </Route>
         <Route path="/">
           <DeckTable />
         </Route>

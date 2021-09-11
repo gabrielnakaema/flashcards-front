@@ -1,6 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory, MemoryHistory } from 'history';
 import { DeckTable } from '../DeckTable';
 import { mockDecks } from '../../utils/tests/mock-decks';
+import userEvent from '@testing-library/user-event';
 jest.mock('../../services/deckService', () => {
   return {
     getDecks: () => {
@@ -12,9 +15,15 @@ jest.mock('../../services/deckService', () => {
 const HEADERS = ['ID', 'Title', 'Description'];
 
 describe('Deck Table component', () => {
+  let history: MemoryHistory;
   beforeEach(async () => {
+    history = createMemoryHistory();
     await waitFor(() => {
-      render(<DeckTable />);
+      render(
+        <Router history={history}>
+          <DeckTable />
+        </Router>
+      );
     });
   });
 
@@ -44,5 +53,23 @@ describe('Deck Table component', () => {
     expect(row.children[0]).toHaveTextContent(mockDecks[0].id.toString());
     expect(row.children[1]).toHaveTextContent(mockDecks[0].title);
     expect(row.children[2]).toHaveTextContent(mockDecks[0].description);
+  });
+
+  it('should change history location pathname to /decks/1 on first row', async () => {
+    const tbody = screen.getByTestId('deck-table-body');
+    const rows = tbody.children;
+    const row = rows[0];
+    userEvent.click(row);
+    expect(history.length).toBe(2);
+    expect(history.location.pathname).toBe(`/decks/${mockDecks[0].id}`);
+  });
+
+  it('should change history location pathname to /decks/2 on second row', () => {
+    const tbody = screen.getByTestId('deck-table-body');
+    const rows = tbody.children;
+    const row = rows[1];
+    userEvent.click(row);
+    expect(history.length).toBe(2);
+    expect(history.location.pathname).toBe(`/decks/${mockDecks[1].id}`);
   });
 });

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   Table,
   TableHead,
@@ -11,6 +12,7 @@ import { Deck } from '../types';
 
 export const DeckTable = () => {
   const [decks, setDecks] = useState<Deck[]>([]);
+  const history = useHistory();
 
   useEffect(() => {
     async function fetchData() {
@@ -33,7 +35,12 @@ export const DeckTable = () => {
         <TableBody data-testid="deck-table-body">
           {decks
             ? decks.map((deck) => (
-                <TableRow key={deck.id}>
+                <TableRow
+                  key={deck.id}
+                  hover
+                  style={{ textDecoration: 'none', cursor: 'pointer' }}
+                  onClick={() => history.push(`/decks/${deck.id}`)}
+                >
                   <TableCell>{deck.id}</TableCell>
                   <TableCell>{deck.title}</TableCell>
                   <TableCell>{deck.description}</TableCell>
