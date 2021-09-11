@@ -1,8 +1,8 @@
 import {
   Button,
-  Card,
-  CardActions,
-  CardContent,
+  Card as MatCard,
+  CardActions as MatCardActions,
+  CardContent as MatCardContent,
   Link,
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -33,8 +33,8 @@ export const DeckDetail = () => {
         >
           <ArrowBackIcon />
         </Link>
-        <Card data-testid="deck-detail">
-          <CardContent>
+        <MatCard data-testid="deck-detail">
+          <MatCardContent>
             {details.title}
             <br />
             {details.description}
@@ -42,8 +42,8 @@ export const DeckDetail = () => {
             Added by {details.user.username}
             <br />
             This deck contains {details.cardCount} cards
-          </CardContent>
-          <CardActions>
+          </MatCardContent>
+          <MatCardActions>
             <Button
               component={RouterLink}
               to={`/decks/${details.id}/cards/study`}
@@ -51,8 +51,8 @@ export const DeckDetail = () => {
             >
               Study now!
             </Button>
-          </CardActions>
-          <CardActions>
+          </MatCardActions>
+          <MatCardActions>
             <Button component={RouterLink} to="/">
               Add new cards
             </Button>
@@ -66,8 +66,8 @@ export const DeckDetail = () => {
             <Button component={RouterLink} to="/">
               Remove deck
             </Button>
-          </CardActions>
-        </Card>
+          </MatCardActions>
+        </MatCard>
       </div>
     );
   } else {
