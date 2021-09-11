@@ -44,7 +44,11 @@ export const DeckDetail = () => {
             This deck contains {details.cardCount} cards
           </CardContent>
           <CardActions>
-            <Button component={RouterLink} to="/">
+            <Button
+              component={RouterLink}
+              to={`/decks/${details.id}/cards/study`}
+              style={{ visibility: !details.cardCount ? 'hidden' : 'visible' }}
+            >
               Study now!
             </Button>
           </CardActions>
@@ -52,7 +56,11 @@ export const DeckDetail = () => {
             <Button component={RouterLink} to="/">
               Add new cards
             </Button>
-            <Button component={RouterLink} to="/">
+            <Button
+              component={RouterLink}
+              to="/"
+              style={{ display: !details.cardCount ? 'none' : 'inherit' }}
+            >
               Cards list
             </Button>
             <Button component={RouterLink} to="/">

@@ -14,3 +14,10 @@ export interface DeckDetails {
     name: string;
   };
 }
+
+export interface Card {
+  id: number;
+  question: string;
+  answer: string;
+  hint: string;
+}
