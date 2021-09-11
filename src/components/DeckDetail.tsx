@@ -58,10 +58,10 @@ export const DeckDetail = () => {
             </Button>
             <Button
               component={RouterLink}
-              to="/"
+              to={`/decks/${details.id}/cards/list`}
               style={{ display: !details.cardCount ? 'none' : 'inherit' }}
             >
-              Cards list
+              Card list
             </Button>
             <Button component={RouterLink} to="/">
               Remove deck

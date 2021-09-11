@@ -6,6 +6,7 @@ import {
   Route,
 } from 'react-router-dom';
 import { CardStudy } from './components/CardStudy';
+import { CardList } from './components/CardList';
 import { DeckDetail } from './components/DeckDetail';
 import { DeckTable } from './components/DeckTable';
 
@@ -29,6 +30,9 @@ function App() {
       <Switch>
         <Route path="/decks/:deckId/cards/study">
           <CardStudy />
+        </Route>
+        <Route path="/decks/:deckId/cards/list">
+          <CardList />
         </Route>
         <Route path="/decks/:deckId">
           <DeckDetail />
