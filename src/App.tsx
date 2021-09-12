@@ -18,7 +18,7 @@ function App() {
   const auth = useContext(AuthContext);
   return (
     <Router>
-      <Header />
+      <Header username={auth.user?.username} logout={auth.logout} />
       <Switch>
         <Route path="/decks/:deckId/cards/study">
           <CardStudy />
