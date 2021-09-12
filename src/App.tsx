@@ -1,32 +1,24 @@
-import { AppBar, Toolbar, Link, Typography } from '@material-ui/core';
+import { useContext } from 'react';
 import {
   BrowserRouter as Router,
-  Link as RouterLink,
   Switch,
   Route,
+  Redirect,
 } from 'react-router-dom';
+import { AuthContext } from './contexts/AuthContext';
 import { CardStudy } from './components/CardStudy';
 import { CardList } from './components/CardList';
 import { DeckDetail } from './components/DeckDetail';
 import { DeckTable } from './components/DeckTable';
+import { SignInForm } from './components/SignInForm';
+import { SignUpForm } from './components/SignUpForm';
+import { Header } from './components/Header';
 
 function App() {
+  const auth = useContext(AuthContext);
   return (
     <Router>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6">
-            <Link
-              component={RouterLink}
-              to="/"
-              color="inherit"
-              style={{ textDecoration: 'none' }}
-            >
-              Flashcards
-            </Link>
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <Header />
       <Switch>
         <Route path="/decks/:deckId/cards/study">
           <CardStudy />
@@ -36,6 +28,12 @@ function App() {
         </Route>
         <Route path="/decks/:deckId">
           <DeckDetail />
+        </Route>
+        <Route path="/signin">
+          {auth.isAuthenticated ? <Redirect to="/" /> : <SignInForm />}
+        </Route>
+        <Route path="/signup">
+          {auth.isAuthenticated ? <Redirect to="/" /> : <SignUpForm />}
         </Route>
         <Route path="/">
           <DeckTable />
