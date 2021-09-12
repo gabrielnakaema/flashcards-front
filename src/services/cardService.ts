@@ -1,11 +1,7 @@
-import axios from 'axios';
+import api from './api';
 import { Card } from '../types';
 
-const BASE_API_URL = process.env.REACT_APP_API_URL as string;
-
 export const getCardsFromDeck = async (deckId: string | number) => {
-  const response = await axios.get<Card[]>(
-    `${BASE_API_URL}/v1/decks/${deckId}/cards`
-  );
+  const response = await api.get<Card[]>(`/v1/decks/${deckId}/cards`);
   return response.data;
 };
