@@ -22,18 +22,21 @@ export const SignUpForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <TextField
+        id="name-field"
         label="Name"
         variant="outlined"
         value={nameField.value}
         onChange={nameField.onChange}
       />
       <TextField
+        id="username-field"
         label="Username"
         variant="outlined"
         value={usernameField.value}
         onChange={usernameField.onChange}
       />
       <TextField
+        id="password-field"
         label="Password"
         variant="outlined"
         value={passwordField.value}
@@ -41,6 +44,7 @@ export const SignUpForm = () => {
         type="password"
       />
       <TextField
+        id="confirm-password-field"
         label="Confirm password"
         variant="outlined"
         value={confirmPasswordField.value}

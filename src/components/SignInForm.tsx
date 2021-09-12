@@ -16,12 +16,14 @@ export const SignInForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <TextField
+        id="username-field"
         label="Username"
         variant="outlined"
         value={usernameField.value}
         onChange={usernameField.onChange}
       />
       <TextField
+        id="password-field"
         label="Password"
         variant="outlined"
         value={passwordField.value}
