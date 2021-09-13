@@ -1,13 +1,14 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { AuthContext } from '../../contexts/AuthContext';
 import { SignInForm } from '../SignInForm';
 
 describe('SignInForm', () => {
-  const mockSignIn = jest.fn();
+  let mockSignIn: jest.Mock;
 
   beforeEach(() => {
+    mockSignIn = jest.fn();
     render(
       <AuthContext.Provider
         value={{
@@ -30,16 +31,33 @@ describe('SignInForm', () => {
     expect(screen.getByText(/submit/i)).toBeInTheDocument();
   });
 
-  it('should call login function on submit', () => {
+  it('should call login function on submit', async () => {
     const usernameInput = screen.getByLabelText(/username/i);
     const passwordInput = screen.getByLabelText(/password/i);
     const submitButton = screen.getByText(/submit/i);
 
-    userEvent.type(usernameInput, 'test');
+    userEvent.type(usernameInput, 'testusername');
+    userEvent.type(passwordInput, 'testpassword');
+    userEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(mockSignIn).toHaveBeenCalledWith('testusername', 'testpassword');
+    });
+  });
+
+  it('should show error for at least 6 character password on submit form with short password', async () => {
+    const usernameInput = screen.getByLabelText(/username/i);
+    const passwordInput = screen.getByLabelText(/password/i);
+    const submitButton = screen.getByText(/submit/i);
+
+    userEvent.type(usernameInput, 'testusername');
     userEvent.type(passwordInput, 'test');
     userEvent.click(submitButton);
 
-    expect(mockSignIn).toHaveBeenCalledTimes(1);
-    expect(mockSignIn).toHaveBeenCalledWith('test', 'test');
+    await waitFor(() => {
+      expect(
+        screen.getByText(/password.*at least 6 characters/i)
+      ).toBeInTheDocument();
+    });
   });
 });
