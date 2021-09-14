@@ -13,6 +13,7 @@ import { DeckTable } from './components/DeckTable';
 import { SignInForm } from './components/SignInForm';
 import { SignUpForm } from './components/SignUpForm';
 import { Header } from './components/Header';
+import { DeckForm } from './components/DeckForm';
 
 function App() {
   const auth = useContext(AuthContext);
@@ -20,11 +21,14 @@ function App() {
     <Router>
       <Header username={auth.user?.username} logout={auth.logout} />
       <Switch>
-        <Route path="/decks/:deckId/cards/study">
-          <CardStudy />
+        <Route path="/decks/create">
+          <DeckForm />
         </Route>
         <Route path="/decks/:deckId/cards/list">
           <CardList />
+        </Route>
+        <Route path="/decks/:deckId/cards/study">
+          <CardStudy />
         </Route>
         <Route path="/decks/:deckId">
           <DeckDetail />

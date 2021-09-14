@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
+  Button,
   Table,
   TableHead,
   TableBody,
   TableRow,
   TableCell,
 } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 import { getDecks } from '../services/deckService';
 import { Deck } from '../types';
 
@@ -24,6 +26,15 @@ export const DeckTable = () => {
 
   return (
     <div>
+      <Button
+        component="a"
+        onClick={() => {
+          history.push('/decks/create');
+        }}
+      >
+        <AddIcon />
+        Add deck
+      </Button>
       <Table>
         <TableHead>
           <TableRow>
