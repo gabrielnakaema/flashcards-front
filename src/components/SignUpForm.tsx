@@ -1,9 +1,14 @@
+import { useContext } from 'react';
 import { Button, TextField } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { AlertContext } from '../contexts/AlertContext';
 import { register } from '../services/authService';
+import { useHistory } from 'react-router';
 
 export const SignUpForm = () => {
+  const { setAlert } = useContext(AlertContext);
+  const history = useHistory();
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -32,7 +37,9 @@ export const SignUpForm = () => {
           password: values.password,
           confirmPassword: values.confirmPassword,
         };
-        register(newUser);
+        await register(newUser);
+        setAlert('User created successfully, please sign in', 'success', 3000);
+        history.push('/signin');
       }
     },
   });

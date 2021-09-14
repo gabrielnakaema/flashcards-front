@@ -3,10 +3,11 @@ import { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from '../contexts/AuthContext';
+import { AlertContext } from '../contexts/AlertContext';
 
 export const SignInForm = () => {
   const { login } = useContext(AuthContext);
-
+  const { setAlert } = useContext(AlertContext);
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -24,6 +25,7 @@ export const SignInForm = () => {
       formik.setErrors(await formik.validateForm());
       if (formik.isValid) {
         login(values.username, values.password);
+        setAlert(`Signed in as ${values.username}`, 'success', 3000);
       }
     },
   });
