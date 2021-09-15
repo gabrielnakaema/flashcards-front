@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   Button,
@@ -11,18 +11,25 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 import { getDecks } from '../services/deckService';
 import { Deck } from '../types';
+import { AlertContext } from '../contexts/AlertContext';
+import { extractErrorMessage } from '../utils/exceptions/extractMessage';
 
 export const DeckTable = () => {
   const [decks, setDecks] = useState<Deck[]>([]);
   const history = useHistory();
+  const { setAlert } = useContext(AlertContext);
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getDecks();
-      setDecks(data);
+      try {
+        const data = await getDecks();
+        setDecks(data);
+      } catch (error: any) {
+        setAlert(extractErrorMessage(error), 'error', 3000);
+      }
     }
     fetchData();
-  }, []);
+  }, [setAlert]);
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Table,
@@ -8,19 +8,26 @@ import {
   TableCell,
 } from '@material-ui/core';
 import { getCardsFromDeck } from '../services/cardService';
+import { AlertContext } from '../contexts/AlertContext';
 import { Card } from '../types';
+import { extractErrorMessage } from '../utils/exceptions/extractMessage';
 
 export const CardList = () => {
   const { deckId } = useParams<{ deckId: string }>();
   const [cards, setCards] = useState<Card[]>([]);
+  const { setAlert } = useContext(AlertContext);
 
   useEffect(() => {
     async function fetchData() {
-      const cards = await getCardsFromDeck(deckId);
-      setCards(cards);
+      try{
+        const cards = await getCardsFromDeck(deckId);
+        setCards(cards);
+      }catch(error){
+        setAlert(extractErrorMessage(error), 'error', 3000)
+      }
     }
     fetchData();
-  }, [deckId]);
+  }, [deckId, setAlert]);
 
   if (cards.length === 0) {
     return <div>Loading...</div>;

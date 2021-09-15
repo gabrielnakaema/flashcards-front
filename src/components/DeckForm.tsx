@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AlertContext } from '../contexts/AlertContext';
 import { createDeck } from '../services/deckService';
+import { extractErrorMessage } from '../utils/exceptions/extractMessage';
 
 export const DeckForm = () => {
   const { setAlert } = useContext(AlertContext);
@@ -23,13 +24,17 @@ export const DeckForm = () => {
           title: values.title,
           description: values.description,
         };
-        const receivedDeck = await createDeck(newDeck);
-        if (receivedDeck) {
-          setAlert(
-            `Deck with title ${receivedDeck.title} created successfully`,
-            'success',
-            3000
-          );
+        try {
+          const receivedDeck = await createDeck(newDeck);
+          if (receivedDeck) {
+            setAlert(
+              `Deck with title ${receivedDeck.title} created successfully`,
+              'success',
+              3000
+            );
+          }
+        } catch (error: any) {
+          setAlert(extractErrorMessage(error), 'error', 3000);
         }
       }
     },

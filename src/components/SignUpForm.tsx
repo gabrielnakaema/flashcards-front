@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { AlertContext } from '../contexts/AlertContext';
 import { register } from '../services/authService';
 import { useHistory } from 'react-router';
+import { extractErrorMessage } from '../utils/exceptions/extractMessage';
 
 export const SignUpForm = () => {
   const { setAlert } = useContext(AlertContext);
@@ -37,9 +38,17 @@ export const SignUpForm = () => {
           password: values.password,
           confirmPassword: values.confirmPassword,
         };
-        await register(newUser);
-        setAlert('User created successfully, please sign in', 'success', 3000);
-        history.push('/signin');
+        try {
+          await register(newUser);
+          setAlert(
+            'User created successfully, please sign in',
+            'success',
+            3000
+          );
+          history.push('/signin');
+        } catch (error: any) {
+          setAlert(extractErrorMessage(error), 'error', 3000);
+        }
       }
     },
   });

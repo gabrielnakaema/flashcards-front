@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from '../contexts/AuthContext';
 import { AlertContext } from '../contexts/AlertContext';
+import { extractErrorMessage } from '../utils/exceptions/extractMessage';
 
 export const SignInForm = () => {
   const { login } = useContext(AuthContext);
@@ -24,8 +25,12 @@ export const SignInForm = () => {
     onSubmit: async (values) => {
       formik.setErrors(await formik.validateForm());
       if (formik.isValid) {
-        login(values.username, values.password);
-        setAlert(`Signed in as ${values.username}`, 'success', 3000);
+        try {
+          login(values.username, values.password);
+          setAlert(`Signed in as ${values.username}`, 'success', 3000);
+        } catch (error: any) {
+          setAlert(extractErrorMessage(error), 'error', 3000);
+        }
       }
     },
   });

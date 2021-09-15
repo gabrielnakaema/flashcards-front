@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Button,
@@ -7,6 +7,8 @@ import {
 } from '@material-ui/core';
 import { getCardsFromDeck } from '../services/cardService';
 import { Card } from '../types';
+import { AlertContext } from '../contexts/AlertContext';
+import { extractErrorMessage } from '../utils/exceptions/extractMessage';
 
 export const CardStudy = () => {
   const { deckId } = useParams<{ deckId: string }>();
@@ -14,15 +16,20 @@ export const CardStudy = () => {
   const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
   const [isAnswerShown, setIsAnswerShown] = useState<boolean>(false);
   const [isHintShown, setIsHintShown] = useState<boolean>(false);
+  const { setAlert } = useContext(AlertContext);
   const numberOfCards = cards.length;
 
   useEffect(() => {
     async function fetchData() {
-      const cards = await getCardsFromDeck(deckId);
-      setCards(cards);
+      try {
+        const cards = await getCardsFromDeck(deckId);
+        setCards(cards);
+      } catch (error) {
+        setAlert(extractErrorMessage(error), 'error', 3000);
+      }
     }
     fetchData();
-  }, [deckId]);
+  }, [deckId, setAlert]);
 
   const nextCard = () => {
     if (currentCardIndex >= numberOfCards - 1) {
