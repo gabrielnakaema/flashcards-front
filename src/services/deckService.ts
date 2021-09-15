@@ -20,3 +20,7 @@ export const createDeck = async (newDeck: NewDeck) => {
   const response = await api.post<Deck>(`/v1/decks`, newDeck);
   return response.data;
 };
+
+export const removeDeck = async (id: number | string) => {
+  await api.delete<void>(`/v1/decks/${id}`);
+};
