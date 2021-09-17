@@ -76,7 +76,10 @@ export const DeckDetail = () => {
             </Button>
           </MatCardActions>
           <MatCardActions>
-            <Button component={RouterLink} to="/">
+            <Button
+              component={RouterLink}
+              to={`/decks/${details.id}/cards/add`}
+            >
               Add new cards
             </Button>
             <Button

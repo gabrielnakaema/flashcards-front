@@ -14,6 +14,7 @@ import { SignInForm } from './components/SignInForm';
 import { SignUpForm } from './components/SignUpForm';
 import { Header } from './components/Header';
 import { DeckForm } from './components/DeckForm';
+import { CardForm } from './components/CardForm';
 
 function App() {
   const auth = useContext(AuthContext);
@@ -26,6 +27,9 @@ function App() {
         </Route>
         <Route path="/decks/:deckId/cards/list">
           <CardList />
+        </Route>
+        <Route path="/decks/:deckId/cards/add">
+          <CardForm />
         </Route>
         <Route path="/decks/:deckId/cards/study">
           <CardStudy />
