@@ -19,3 +19,18 @@ export const createCards = async (
   const response = await api.post<Card[]>(`/v1/decks/${deckId}/cards`, cards);
   return response.data;
 };
+
+export const updateCard = async (deckId: string | number, newCard: Card) => {
+  const response = await api.put<Card>(
+    `/v1/decks/${deckId}/cards/${newCard.id}`,
+    newCard
+  );
+  return response.data;
+};
+
+export const deleteCardFromDeck = async (
+  deckId: string | number,
+  cardId: string | number
+) => {
+  await api.delete<void>(`/v1/decks/${deckId}/cards/${cardId}`);
+};
