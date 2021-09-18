@@ -9,8 +9,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-} from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+} from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useState, useEffect, useContext } from 'react';
 import { useParams, Link as RouterLink, useHistory } from 'react-router-dom';
 import { AlertContext } from '../contexts/AlertContext';

@@ -1,4 +1,4 @@
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField } from '@mui/material';
 import { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -47,7 +47,6 @@ export const SignInForm = () => {
         id="username-field"
         name="username"
         label="Username"
-        variant="outlined"
         value={formik.values.username}
         onChange={handleChange}
         error={formik.touched.username && Boolean(formik.errors.username)}
@@ -59,7 +58,6 @@ export const SignInForm = () => {
         name="password"
         label="Password"
         type="password"
-        variant="outlined"
         value={formik.values.password}
         onChange={handleChange}
         error={formik.touched.password && Boolean(formik.errors.password)}

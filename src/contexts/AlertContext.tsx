@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react';
-import { Snackbar } from '@material-ui/core';
-import { Alert, Color } from '@material-ui/lab';
+import { Snackbar } from '@mui/material';
+import { Alert } from '@mui/lab';
 
 interface IAlertContext {
   alert: {
@@ -43,7 +43,7 @@ export const AlertProvider = (props: { children: React.ReactNode }) => {
         autoHideDuration={alert.duration}
         onClose={handleClose}
       >
-        <Alert onClose={handleClose} severity={alert.type as Color}>
+        <Alert onClose={handleClose} severity={alert.type}>
           {alert.message}
         </Alert>
       </Snackbar>

@@ -4,7 +4,7 @@ import {
   Button,
   Card as MatCard,
   CardActions as MatCardActions,
-} from '@material-ui/core';
+} from '@mui/material';
 import { getCardsFromDeck } from '../services/cardService';
 import { Card } from '../types';
 import { AlertContext } from '../contexts/AlertContext';

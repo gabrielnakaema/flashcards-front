@@ -2,8 +2,8 @@ import { useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { FieldArray, getIn, Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import { Button, TextField } from '@material-ui/core';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import { Button, TextField } from '@mui/material';
 import { AlertContext } from '../contexts/AlertContext';
 import { createCards } from '../services/cardService';
 import { extractErrorMessage } from '../utils/exceptions/extractMessage';
@@ -71,7 +71,6 @@ export const CardForm = () => {
                   name={accessIndexes.question}
                   type="text"
                   label="Question"
-                  variant="outlined"
                   value={formik.values.cards[currentIndex].question}
                   onChange={formik.handleChange}
                   error={
@@ -88,7 +87,6 @@ export const CardForm = () => {
                   name={accessIndexes.answer}
                   type="text"
                   label="Answer"
-                  variant="outlined"
                   value={formik.values.cards[currentIndex].answer}
                   onChange={formik.handleChange}
                   error={
@@ -105,7 +103,6 @@ export const CardForm = () => {
                   name={accessIndexes.hint}
                   type="text"
                   label="Hint"
-                  variant="outlined"
                   value={formik.values.cards[currentIndex].hint}
                   onChange={formik.handleChange}
                 />
@@ -163,7 +160,7 @@ const CardToBeAdded = (props: CardToBeAddedProps) => {
       onClick={props.selectIndex}
       type="button"
       variant="outlined"
-      color={props.isValid ? 'default' : 'secondary'}
+      color={props.isValid ? undefined : 'error'}
     >
       {props.isSelected && <ArrowRightIcon />}
 

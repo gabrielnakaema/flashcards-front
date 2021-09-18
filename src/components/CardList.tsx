@@ -14,10 +14,10 @@ import {
   TableRow,
   TableCell,
   TextField,
-} from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import CloseIcon from '@material-ui/icons/Close';
+} from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import CloseIcon from '@mui/icons-material/Close';
 import {
   getCardsFromDeck,
   updateCard,
@@ -231,7 +231,6 @@ const EditCardForm = (props: EditCardFormProps) => {
             id="edit-card-question"
             name="question"
             label="Question"
-            variant="outlined"
             value={formik.values.question || ''}
             onChange={formik.handleChange}
             required
@@ -240,7 +239,6 @@ const EditCardForm = (props: EditCardFormProps) => {
             id="edit-card-answer"
             name="answer"
             label="Answer"
-            variant="outlined"
             value={formik.values.answer || ''}
             onChange={formik.handleChange}
             required
@@ -251,7 +249,6 @@ const EditCardForm = (props: EditCardFormProps) => {
             label="Hint"
             value={formik.values.hint || ''}
             onChange={formik.handleChange}
-            variant="outlined"
           />
           <Button type="submit">Save</Button>
         </Form>

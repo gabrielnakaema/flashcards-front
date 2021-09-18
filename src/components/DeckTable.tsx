@@ -7,8 +7,8 @@ import {
   TableBody,
   TableRow,
   TableCell,
-} from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import { getDecks } from '../services/deckService';
 import { Deck } from '../types';
 import { AlertContext } from '../contexts/AlertContext';

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AlertContext } from '../contexts/AlertContext';
@@ -64,7 +64,6 @@ export const SignUpForm = () => {
         id="name-field"
         name="name"
         label="Name"
-        variant="outlined"
         value={formik.values.name}
         onChange={handleChange}
         error={formik.touched.name && formik.errors.name ? true : false}
@@ -74,7 +73,6 @@ export const SignUpForm = () => {
         id="username-field"
         name="username"
         label="Username"
-        variant="outlined"
         value={formik.values.username}
         onChange={handleChange}
         error={formik.touched.username && formik.errors.username ? true : false}
@@ -84,7 +82,6 @@ export const SignUpForm = () => {
         id="password-field"
         name="password"
         label="Password"
-        variant="outlined"
         type="password"
         value={formik.values.password}
         onChange={handleChange}
@@ -95,7 +92,6 @@ export const SignUpForm = () => {
         id="confirm-password-field"
         name="confirmPassword"
         label="Confirm password"
-        variant="outlined"
         type="password"
         value={formik.values.confirmPassword}
         onChange={handleChange}

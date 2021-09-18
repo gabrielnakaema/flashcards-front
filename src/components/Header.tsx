@@ -1,5 +1,5 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button, Link } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Button, Link } from '@mui/material';
 
 interface HeaderProps {
   logout: () => void;

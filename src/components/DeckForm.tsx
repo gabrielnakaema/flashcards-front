@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AlertContext } from '../contexts/AlertContext';
@@ -51,7 +51,6 @@ export const DeckForm = () => {
         id="title-field"
         name="title"
         label="Title"
-        variant="outlined"
         value={formik.values.title}
         onChange={handleChange}
         error={formik.touched.title && Boolean(formik.errors.title)}
@@ -61,7 +60,6 @@ export const DeckForm = () => {
         id="description-field"
         name="description"
         label="Description"
-        variant="outlined"
         value={formik.values.description}
         onChange={handleChange}
         error={formik.touched.description && Boolean(formik.errors.description)}

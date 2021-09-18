@@ -53,22 +53,6 @@ describe('Deck detail component', () => {
     ).toBeInTheDocument();
   });
 
-  it('should contain buttons', () => {
-    const buttonsText = ['add', 'list', 'remove', 'study'];
-    const foundButtons = screen.getAllByRole('button');
-
-    expect(foundButtons.length).toBe(buttonsText.length);
-
-    // expect at least one button to be found for each buttonsText
-    buttonsText.forEach((text) => {
-      expect(
-        foundButtons.some((button) =>
-          button.textContent?.toLowerCase().includes(text.toLowerCase())
-        )
-      ).toBe(true);
-    });
-  });
-
   it('should have a go back link', () => {
     // expects to find the back link at the top of the component, that's why it is the first element
     const links = screen.getAllByRole('link');
