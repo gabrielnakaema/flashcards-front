@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link as RouterLink } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -7,6 +7,7 @@ import {
   CardActions as MatCardActions,
   Typography,
 } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { getCardsFromDeck } from '../services/cardService';
 import { Card } from '../types';
 import { AlertContext } from '../contexts/AlertContext';
@@ -57,14 +58,32 @@ export const CardStudy = () => {
     return <Box>Deck does not have any cards</Box>;
   } else {
     return (
-      <Box sx={{}}>
+      <Box
+        sx={{
+          margin: {
+            xs: '1rem 0.5rem',
+            sm: '1rem 2rem',
+            md: '1rem 4rem',
+          },
+        }}
+      >
+        <Box
+          sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+        >
+          <Button
+            startIcon={<ArrowBackIcon />}
+            color="inherit"
+            component={RouterLink}
+            to={`/decks/${deckId}`}
+          >
+            Back
+          </Button>
+          <Typography sx={{ marginLeft: 'auto' }}>
+            Card {currentCardIndex + 1} of {numberOfCards}
+          </Typography>
+        </Box>
         <MatCard
           sx={{
-            margin: {
-              xs: '1rem 0.5rem',
-              sm: '1rem 2rem',
-              md: '1rem 4rem',
-            },
             minHeight: '50vh',
             display: 'flex',
             flexDirection: 'column',

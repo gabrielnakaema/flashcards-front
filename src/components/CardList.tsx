@@ -1,7 +1,8 @@
 import { useState, useEffect, useContext, Fragment } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link as RouterLink } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import {
+  Box,
   Paper,
   Button,
   Dialog,
@@ -18,6 +19,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import CloseIcon from '@mui/icons-material/Close';
@@ -95,7 +97,7 @@ export const CardList = () => {
     return <div>Loading...</div>;
   } else {
     return (
-      <Paper
+      <Box
         sx={{
           margin: {
             xs: '1rem 0.5rem',
@@ -104,57 +106,70 @@ export const CardList = () => {
           },
         }}
       >
-        <RemoveCardDialog
-          open={isDialogOpen}
-          onClose={closeDeleteDialog}
-          onConfirm={deleteCard}
-        />
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Question</TableCell>
-              <TableCell>Answer</TableCell>
-              <TableCell>Hint</TableCell>
-              <TableCell sx={{ paddingLeft: '2rem', width: '5rem' }}>
-                Actions
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {cards.map((card, index) => (
-              <Fragment key={card.id}>
-                <TableRow>
-                  <TableCell>{card.question}</TableCell>
-                  <TableCell>{card.answer}</TableCell>
-                  <TableCell>{card.hint}</TableCell>
-                  <TableCell>
-                    <CardRowActions
-                      openEdit={() => setEditingCardIndex(index)}
-                      closeEdit={() => setEditingCardIndex(null)}
-                      delete={() => openDeleteDialog(card.id)}
-                      isEditing={index === editingCardIndex}
-                    />
-                  </TableCell>
-                </TableRow>
-                {editingCardIndex !== null && editingCardIndex === index && (
+        <Button
+          component={RouterLink}
+          to={`/decks/${deckId}`}
+          style={{ textDecoration: 'none', color: '#333' }}
+          startIcon={<ArrowBackIcon />}
+        >
+          Back
+        </Button>
+        <Paper>
+          <RemoveCardDialog
+            open={isDialogOpen}
+            onClose={closeDeleteDialog}
+            onConfirm={deleteCard}
+          />
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Question</TableCell>
+                <TableCell>Answer</TableCell>
+                <TableCell>Hint</TableCell>
+                <TableCell sx={{ paddingLeft: '2rem', width: '5rem' }}>
+                  Actions
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {cards.map((card, index) => (
+                <Fragment key={card.id}>
                   <TableRow>
-                    <TableCell colSpan={4}>
-                      <Typography sx={{ marginBottom: '1rem' }} variant="body2">
-                        Editing card {index + 1}
-                      </Typography>
-                      <EditCardForm
-                        card={card}
-                        onSubmit={handleEditCard}
-                        closeForm={() => setEditingCardIndex(null)}
+                    <TableCell>{card.question}</TableCell>
+                    <TableCell>{card.answer}</TableCell>
+                    <TableCell>{card.hint}</TableCell>
+                    <TableCell>
+                      <CardRowActions
+                        openEdit={() => setEditingCardIndex(index)}
+                        closeEdit={() => setEditingCardIndex(null)}
+                        delete={() => openDeleteDialog(card.id)}
+                        isEditing={index === editingCardIndex}
                       />
                     </TableCell>
                   </TableRow>
-                )}
-              </Fragment>
-            ))}
-          </TableBody>
-        </Table>
-      </Paper>
+                  {editingCardIndex !== null && editingCardIndex === index && (
+                    <TableRow>
+                      <TableCell colSpan={4}>
+                        <Typography
+                          sx={{ marginBottom: '1rem' }}
+                          variant="body2"
+                        >
+                          Editing card {index + 1}
+                        </Typography>
+                        <EditCardForm
+                          card={card}
+                          onSubmit={handleEditCard}
+                          closeForm={() => setEditingCardIndex(null)}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </Fragment>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
+      </Box>
     );
   }
 };
