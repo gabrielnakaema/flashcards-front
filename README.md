@@ -14,13 +14,13 @@ Here are some screenshots of the current state of the application:
 
 <p float="middle">
 
-  <img src="https://user-images.githubusercontent.com/61115384/133927697-855f9cf4-1845-4a58-a23b-e982e435c125.png" alt="flashcards-1" width="40%"/>
+  <img src="https://user-images.githubusercontent.com/61115384/133946945-cfb17a42-b4c5-4d41-9361-9fbc4415bed2.png" alt="flashcards-1" width="40%"/>
 
-  <img src="https://user-images.githubusercontent.com/61115384/133927705-9d408709-6887-422b-b0b5-28c366a69b31.png" alt="flashcards-2" width="40%"/>
+  <img src="https://user-images.githubusercontent.com/61115384/133946948-933bf272-e4ef-46a6-8144-aa8dd86cc72a.png" alt="flashcards-2" width="40%"/>
   
-  <img src="https://user-images.githubusercontent.com/61115384/133927718-6ed49d0a-c6d9-4203-83c4-0c8a9bfcc5db.png" alt="flashcards-3" width="40%"/>
+  <img src="https://user-images.githubusercontent.com/61115384/133946950-dd547292-827e-4ad0-b522-b6b5ff952694.png" alt="flashcards-3" width="40%"/>
   
-  <img src="https://user-images.githubusercontent.com/61115384/133927731-4d07f6d5-5e6d-4a1c-a185-ccc724bc6ac4.png" alt="flashcards-4" width="40%"/>
+  <img src="https://user-images.githubusercontent.com/61115384/133946951-acd0219b-4b91-438f-b32c-b84ae06a5205.png" alt="flashcards-4" width="40%"/>
 
 </p>
 

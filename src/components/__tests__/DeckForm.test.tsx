@@ -1,11 +1,16 @@
 import { render, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { DeckForm } from '../DeckForm';
 import * as deckService from '../../services/deckService';
 import userEvent from '@testing-library/user-event';
 
 describe('Deck form component', () => {
   beforeEach(() => {
-    render(<DeckForm />);
+    render(
+      <MemoryRouter>
+        <DeckForm />
+      </MemoryRouter>
+    );
   });
 
   it('should render input fields', () => {

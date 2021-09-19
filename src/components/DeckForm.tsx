@@ -1,5 +1,6 @@
 import { useContext } from 'react';
-import { Box, Button, TextField } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AlertContext } from '../contexts/AlertContext';
@@ -46,45 +47,59 @@ export const DeckForm = () => {
   };
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <Box
-        sx={{
-          maxWidth: {
-            xs: '450px',
-          },
-          margin: {
-            xs: '1rem',
-            sm: '1rem auto',
-          },
-          textAlign: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <TextField
-          id="title-field"
-          name="title"
-          label="Title"
-          value={formik.values.title}
-          onChange={handleChange}
-          error={formik.touched.title && Boolean(formik.errors.title)}
-          helperText={formik.touched.title && formik.errors.title}
-          sx={{ marginBottom: '1rem' }}
-        />
-        <TextField
-          id="description-field"
-          name="description"
-          label="Description"
-          value={formik.values.description}
-          onChange={handleChange}
-          error={
-            formik.touched.description && Boolean(formik.errors.description)
-          }
-          helperText={formik.touched.description && formik.errors.description}
-          sx={{ marginBottom: '1rem' }}
-        />
-        <Button type="submit">Submit</Button>
-      </Box>
-    </form>
+    <Box
+      sx={{
+        maxWidth: {
+          xs: '450px',
+        },
+        margin: {
+          xs: '1rem',
+          sm: '1rem auto',
+        },
+        textAlign: 'center',
+      }}
+    >
+      <Typography variant="h6">Create deck</Typography>
+      <form onSubmit={formik.handleSubmit}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            marginTop: '1rem',
+          }}
+        >
+          <TextField
+            id="title-field"
+            name="title"
+            label="Title"
+            value={formik.values.title}
+            onChange={handleChange}
+            error={formik.touched.title && Boolean(formik.errors.title)}
+            helperText={formik.touched.title && formik.errors.title}
+            sx={{ marginBottom: '1rem' }}
+          />
+          <TextField
+            id="description-field"
+            name="description"
+            label="Description"
+            value={formik.values.description}
+            onChange={handleChange}
+            error={
+              formik.touched.description && Boolean(formik.errors.description)
+            }
+            helperText={formik.touched.description && formik.errors.description}
+            sx={{ marginBottom: '1rem' }}
+          />
+          <Box>
+            <Button type="button" component={RouterLink} to="/" color="error">
+              Cancel
+            </Button>
+            <Button type="submit" sx={{ marginLeft: '1rem' }}>
+              Submit
+            </Button>
+          </Box>
+        </Box>
+      </form>
+    </Box>
   );
 };

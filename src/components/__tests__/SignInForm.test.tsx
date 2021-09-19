@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
 import { AlertContext } from '../../contexts/AlertContext';
 import { AuthContext } from '../../contexts/AuthContext';
 import { SignInForm } from '../SignInForm';
@@ -31,7 +32,9 @@ describe('SignInForm', () => {
             },
           }}
         >
-          <SignInForm />
+          <MemoryRouter>
+            <SignInForm />
+          </MemoryRouter>
         </AuthContext.Provider>
       </AlertContext.Provider>
     );
