@@ -1,10 +1,11 @@
 import { useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link as RouterLink } from 'react-router-dom';
 import { FieldArray, getIn, Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import { Button, TextField, Box, Typography } from '@mui/material';
+import { Button, IconButton, TextField, Box, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { AlertContext } from '../contexts/AlertContext';
 import { createCards } from '../services/cardService';
 import { extractErrorMessage } from '../utils/exceptions/extractMessage';
@@ -42,6 +43,12 @@ export const CardForm = () => {
       return;
     }
     setCurrentIndex(index);
+  };
+
+  const handleAfterRemove = (index: number) => {
+    if (index <= currentIndex) {
+      changeIndex(currentIndex - 1);
+    }
   };
 
   return (
@@ -138,13 +145,23 @@ export const CardForm = () => {
                         onChange={formik.handleChange}
                         sx={{ marginBottom: '1rem' }}
                       />
-                      <Button
-                        type="submit"
-                        disabled={!formik.isValid}
-                        data-testid="submit-button"
-                      >
-                        Submit all cards
-                      </Button>
+                      <Box>
+                        <Button
+                          color="error"
+                          component={RouterLink}
+                          to={`/decks/${deckId}`}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          type="submit"
+                          disabled={!formik.isValid}
+                          data-testid="submit-button"
+                          sx={{ marginLeft: '1rem' }}
+                        >
+                          Submit all cards
+                        </Button>
+                      </Box>
                     </Box>
                     <Box
                       sx={{
@@ -176,6 +193,13 @@ export const CardForm = () => {
                             )
                           }
                           isSelected={index === currentIndex}
+                          removeCard={() => {
+                            if (formik.values.cards.length === 1) {
+                              return;
+                            }
+                            arrayHelpers.remove(index);
+                            handleAfterRemove(index);
+                          }}
                         />
                       ))}
                     </Box>
@@ -195,28 +219,37 @@ interface CardToBeAddedProps {
   selectIndex: () => void;
   isValid: boolean;
   isSelected: boolean;
+  removeCard: () => void;
 }
 
 const CardToBeAdded = (props: CardToBeAddedProps) => {
   return (
-    <Button
-      onClick={props.selectIndex}
-      type="button"
-      variant="outlined"
-      color={props.isValid ? undefined : 'error'}
-      startIcon={props.isSelected && <ArrowRightIcon />}
-      sx={{ marginBottom: '1rem' }}
-    >
-      <Typography
-        sx={{
-          overflow: 'hidden',
-          whiteSpace: 'nowrap',
-          maxWidth: '100%',
-          textTransform: 'none',
-        }}
+    <Box sx={{ marginBottom: '1rem', width: '100%', display: 'flex' }}>
+      <Button
+        onClick={props.selectIndex}
+        type="button"
+        variant="outlined"
+        color={props.isValid ? 'primary' : 'error'}
+        startIcon={props.isSelected && <ArrowRightIcon />}
+        sx={{ flex: '1 0 50%' }}
       >
-        {props.question ? props.question : 'Blank card'}
-      </Typography>
-    </Button>
+        <Typography
+          sx={{
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            maxWidth: '100%',
+            textTransform: 'none',
+          }}
+        >
+          {props.question ? props.question : 'Blank card'}
+        </Typography>
+      </Button>
+      <IconButton
+        sx={{ marginLeft: 'auto', opacity: '50%' }}
+        onClick={props.removeCard}
+      >
+        <DeleteOutlineIcon />
+      </IconButton>
+    </Box>
   );
 };

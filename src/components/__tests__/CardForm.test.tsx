@@ -4,15 +4,21 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { CardForm } from '../CardForm';
 import * as cardService from '../../services/cardService';
 import { AlertContext } from '../../contexts/AlertContext';
-const setAlert = jest.fn();
+
 jest.mock('../../services/cardService', () => {
   return {
-    createCards: jest.fn(),
-    updateCard: jest.fn(),
+    createCards: jest.fn((deckId, newCards) => {
+      return Promise.resolve();
+    }),
+    updateCard: jest.fn((newCard) => {
+      return Promise.resolve();
+    }),
   };
 });
+
 describe('card form component', () => {
   beforeEach(() => {
+    const setAlert = jest.fn();
     render(
       <AlertContext.Provider
         value={{
@@ -66,15 +72,16 @@ describe('card form component', () => {
     ).toBeInTheDocument();
   });
 
-  it('should add one button with text "Blank card" to the document after clicking "add card" button', async () => {
+  it('should add 2 buttons to the document after clicking "add card" button', async () => {
     const previousButtons = screen.getAllByRole('button');
 
     userEvent.click(screen.getByRole('button', { name: /add card/i }));
 
     const newButtons = await screen.findAllByRole('button');
 
+    // 2 new buttons are: "Blank card" and the remove card button
     await waitFor(() => {
-      expect(newButtons.length).toBe(previousButtons.length + 1);
+      expect(newButtons.length).toBe(previousButtons.length + 2);
     });
   });
 
@@ -114,12 +121,9 @@ describe('card form component', () => {
     userEvent.type(answerInput, 'TestingAnswer');
     userEvent.type(hintInput, 'TestingHint');
 
-    await waitFor(() => {
-      expect(submitButton).not.toBeDisabled();
-    });
     userEvent.click(submitButton);
 
-    await waitFor(() => {
+    return await waitFor(() => {
       expect(spy).toHaveBeenCalledWith('1', [
         {
           question: 'TestingQuestion',
@@ -143,32 +147,24 @@ describe('card form component', () => {
     const answerInput = screen.getByLabelText(/answer/i);
     const hintInput = screen.getByLabelText(/hint/i);
 
-    userEvent.type(questionInput, 'TestingQuestion');
-    userEvent.type(answerInput, 'TestingAnswer');
-    userEvent.type(hintInput, 'TestingHint');
+    userEvent.type(questionInput, 'TestingQ');
+    userEvent.type(answerInput, 'TestingA');
+    userEvent.type(hintInput, 'TestingH');
 
     userEvent.click(addCardButton);
 
-    const questionInput2 = screen.getByLabelText(/question/i);
-    const answerInput2 = screen.getByLabelText(/answer/i);
-    const hintInput2 = screen.getByLabelText(/hint/i);
-
-    userEvent.type(questionInput2, 'TestingQuestion2');
-    userEvent.type(answerInput2, 'TestingAnswer2');
-    userEvent.type(hintInput2, 'TestingHint2');
-
-    await waitFor(() => {
-      expect(submitButton.disabled).toBe(false);
-    });
+    userEvent.type(questionInput, 'TestingQuestion2');
+    userEvent.type(answerInput, 'TestingAnswer2');
+    userEvent.type(hintInput, 'TestingHint2');
 
     userEvent.click(submitButton);
 
-    await waitFor(() => {
+    return await waitFor(() => {
       expect(spy).toHaveBeenCalledWith('1', [
         {
-          question: 'TestingQuestion',
-          answer: 'TestingAnswer',
-          hint: 'TestingHint',
+          question: 'TestingQ',
+          answer: 'TestingA',
+          hint: 'TestingH',
         },
         {
           question: 'TestingQuestion2',
