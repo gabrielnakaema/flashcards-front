@@ -27,22 +27,24 @@ export const Header = (props: HeaderProps) => {
             </Button>
           ) : (
             <>
-              <Link
+              <Button
                 component={RouterLink}
                 to="/signin"
                 color="inherit"
-                style={{ textDecoration: 'none' }}
+                sx={{
+                  textTransform: 'none',
+                }}
               >
-                Sign in
-              </Link>
-              <Link
+                <Typography>Sign in</Typography>
+              </Button>
+              <Button
                 component={RouterLink}
                 to="/signup"
                 color="inherit"
-                style={{ textDecoration: 'none' }}
+                sx={{ textTransform: 'none' }}
               >
-                Sign up
-              </Link>
+                <Typography>Sign up</Typography>
+              </Button>
             </>
           )}
         </div>

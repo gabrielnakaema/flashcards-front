@@ -1,4 +1,4 @@
-import { Button, TextField } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -42,28 +42,43 @@ export const SignInForm = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <TextField
-        fullWidth
-        id="username-field"
-        name="username"
-        label="Username"
-        value={formik.values.username}
-        onChange={handleChange}
-        error={formik.touched.username && Boolean(formik.errors.username)}
-        helperText={formik.touched.username && formik.errors.username}
-      />
-      <TextField
-        fullWidth
-        id="password-field"
-        name="password"
-        label="Password"
-        type="password"
-        value={formik.values.password}
-        onChange={handleChange}
-        error={formik.touched.password && Boolean(formik.errors.password)}
-        helperText={formik.touched.password && formik.errors.password}
-      />
-      <Button type="submit">Submit</Button>
+      <Box
+        sx={{
+          maxWidth: {
+            xs: '450px',
+          },
+          margin: {
+            xs: '1rem',
+            sm: '1rem auto',
+          },
+          textAlign: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <TextField
+          id="username-field"
+          name="username"
+          label="Username"
+          value={formik.values.username}
+          onChange={handleChange}
+          error={formik.touched.username && Boolean(formik.errors.username)}
+          helperText={formik.touched.username && formik.errors.username}
+          sx={{ marginBottom: '1rem' }}
+        />
+        <TextField
+          id="password-field"
+          name="password"
+          label="Password"
+          type="password"
+          value={formik.values.password}
+          onChange={handleChange}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
+          sx={{ marginBottom: '1rem' }}
+        />
+        <Button type="submit">Submit</Button>
+      </Box>
     </form>
   );
 };

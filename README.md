@@ -1,46 +1,56 @@
-# Getting Started with Create React App
+# Flashcards Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 
-## Available Scripts
+## About this project
 
-In the project directory, you can run:
+This is the frontend for the flashcards application, the API used for storing and providing data is at this other [repository](https://github.com/gabrielnakaema/flashcards-api)
 
-### `npm start`
+This is still a work in progress
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This project's goal is to create an application where users can create and store decks of flashcards that can assist them in learning through spaced repetition methods.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Here are some screenshots of the current state of the application:
 
-### `npm test`
+<p float="middle">
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  <img src="https://user-images.githubusercontent.com/61115384/133927697-855f9cf4-1845-4a58-a23b-e982e435c125.png" alt="flashcards-1" width="40%"/>
 
-### `npm run build`
+  <img src="https://user-images.githubusercontent.com/61115384/133927705-9d408709-6887-422b-b0b5-28c366a69b31.png" alt="flashcards-2" width="40%"/>
+  
+  <img src="https://user-images.githubusercontent.com/61115384/133927718-6ed49d0a-c6d9-4203-83c4-0c8a9bfcc5db.png" alt="flashcards-3" width="40%"/>
+  
+  <img src="https://user-images.githubusercontent.com/61115384/133927731-4d07f6d5-5e6d-4a1c-a185-ccc724bc6ac4.png" alt="flashcards-4" width="40%"/>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+</p>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Libraries used
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- React 17
+- TypeScript
+- Axios
+- Material UI
+- Formik
+- Yup
 
-### `npm run eject`
+## Instructions
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. Clone this repository
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```
+   git clone https://github.com/gabrielnakaema/flashcards-front.git
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+1. Navigate to the created directory
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+   ```
+   cd flashcards-front
+   ```
 
-## Learn More
+1. Create .env file following .env.example file, setting the following environment variables:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```
+   REACT_APP_API_URL={API_URL}
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Install dependencies using `npm install` and start application in development mode using `npm run start`

@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   Button,
+  Paper,
   Table,
   TableHead,
   TableBody,
@@ -32,14 +33,24 @@ export const DeckTable = () => {
   }, [setAlert]);
 
   return (
-    <div>
+    <Paper
+      sx={{
+        margin: {
+          xs: '1rem 0.5rem',
+          sm: '1rem 2rem',
+          md: '1rem 4rem',
+        },
+      }}
+    >
       <Button
         component="a"
         onClick={() => {
           history.push('/decks/create');
         }}
+        startIcon={<AddIcon />}
+        sx={{ margin: '1rem 0 0 1rem' }}
+        variant="outlined"
       >
-        <AddIcon />
         Add deck
       </Button>
       <Table>
@@ -67,6 +78,6 @@ export const DeckTable = () => {
             : null}
         </TableBody>
       </Table>
-    </div>
+    </Paper>
   );
 };

@@ -1,9 +1,9 @@
 import {
+  Box,
   Button,
   Card as MatCard,
   CardActions as MatCardActions,
   CardContent as MatCardContent,
-  Link,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -48,14 +48,23 @@ export const DeckDetail = () => {
 
   if (details) {
     return (
-      <div>
-        <Link
+      <Box
+        sx={{
+          margin: {
+            xs: '1rem 0.5rem',
+            sm: '1rem 2rem',
+            md: '1rem 4rem',
+          },
+        }}
+      >
+        <Button
           component={RouterLink}
           to="/"
           style={{ textDecoration: 'none', color: '#333' }}
+          startIcon={<ArrowBackIcon />}
         >
-          <ArrowBackIcon />
-        </Link>
+          Back
+        </Button>
         <MatCard data-testid="deck-detail">
           <MatCardContent>
             {details.title}
@@ -106,7 +115,7 @@ export const DeckDetail = () => {
             </Button>
           </DialogActions>
         </Dialog>
-      </div>
+      </Box>
     );
   } else {
     return null;

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Button, TextField } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AlertContext } from '../contexts/AlertContext';
@@ -47,25 +47,44 @@ export const DeckForm = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <TextField
-        id="title-field"
-        name="title"
-        label="Title"
-        value={formik.values.title}
-        onChange={handleChange}
-        error={formik.touched.title && Boolean(formik.errors.title)}
-        helperText={formik.touched.title && formik.errors.title}
-      />
-      <TextField
-        id="description-field"
-        name="description"
-        label="Description"
-        value={formik.values.description}
-        onChange={handleChange}
-        error={formik.touched.description && Boolean(formik.errors.description)}
-        helperText={formik.touched.description && formik.errors.description}
-      />
-      <Button type="submit">Submit</Button>
+      <Box
+        sx={{
+          maxWidth: {
+            xs: '450px',
+          },
+          margin: {
+            xs: '1rem',
+            sm: '1rem auto',
+          },
+          textAlign: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <TextField
+          id="title-field"
+          name="title"
+          label="Title"
+          value={formik.values.title}
+          onChange={handleChange}
+          error={formik.touched.title && Boolean(formik.errors.title)}
+          helperText={formik.touched.title && formik.errors.title}
+          sx={{ marginBottom: '1rem' }}
+        />
+        <TextField
+          id="description-field"
+          name="description"
+          label="Description"
+          value={formik.values.description}
+          onChange={handleChange}
+          error={
+            formik.touched.description && Boolean(formik.errors.description)
+          }
+          helperText={formik.touched.description && formik.errors.description}
+          sx={{ marginBottom: '1rem' }}
+        />
+        <Button type="submit">Submit</Button>
+      </Box>
     </form>
   );
 };

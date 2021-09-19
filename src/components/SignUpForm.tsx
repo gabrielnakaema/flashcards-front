@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Button, TextField } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AlertContext } from '../contexts/AlertContext';
@@ -60,51 +60,74 @@ export const SignUpForm = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <TextField
-        id="name-field"
-        name="name"
-        label="Name"
-        value={formik.values.name}
-        onChange={handleChange}
-        error={formik.touched.name && formik.errors.name ? true : false}
-        helperText={formik.touched.name && formik.errors.name}
-      />
-      <TextField
-        id="username-field"
-        name="username"
-        label="Username"
-        value={formik.values.username}
-        onChange={handleChange}
-        error={formik.touched.username && formik.errors.username ? true : false}
-        helperText={formik.touched.username && formik.errors.username}
-      />
-      <TextField
-        id="password-field"
-        name="password"
-        label="Password"
-        type="password"
-        value={formik.values.password}
-        onChange={handleChange}
-        error={formik.touched.password && formik.errors.password ? true : false}
-        helperText={formik.touched.password && formik.errors.password}
-      />
-      <TextField
-        id="confirm-password-field"
-        name="confirmPassword"
-        label="Confirm password"
-        type="password"
-        value={formik.values.confirmPassword}
-        onChange={handleChange}
-        error={
-          formik.touched.confirmPassword && formik.errors.confirmPassword
-            ? true
-            : false
-        }
-        helperText={
-          formik.touched.confirmPassword && formik.errors.confirmPassword
-        }
-      />
-      <Button type="submit">Submit</Button>
+      <Box
+        sx={{
+          maxWidth: {
+            xs: '450px',
+          },
+          margin: {
+            xs: '1rem',
+            sm: '1rem auto',
+          },
+          textAlign: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <TextField
+          id="name-field"
+          name="name"
+          label="Name"
+          value={formik.values.name}
+          onChange={handleChange}
+          error={formik.touched.name && formik.errors.name ? true : false}
+          helperText={formik.touched.name && formik.errors.name}
+          sx={{ marginBottom: '1rem' }}
+        />
+        <TextField
+          id="username-field"
+          name="username"
+          label="Username"
+          value={formik.values.username}
+          onChange={handleChange}
+          error={
+            formik.touched.username && formik.errors.username ? true : false
+          }
+          helperText={formik.touched.username && formik.errors.username}
+          sx={{ marginBottom: '1rem' }}
+        />
+        <TextField
+          id="password-field"
+          name="password"
+          label="Password"
+          type="password"
+          value={formik.values.password}
+          onChange={handleChange}
+          error={
+            formik.touched.password && formik.errors.password ? true : false
+          }
+          helperText={formik.touched.password && formik.errors.password}
+          sx={{ marginBottom: '1rem' }}
+        />
+        <TextField
+          id="confirm-password-field"
+          name="confirmPassword"
+          label="Confirm password"
+          type="password"
+          value={formik.values.confirmPassword}
+          onChange={handleChange}
+          error={
+            formik.touched.confirmPassword && formik.errors.confirmPassword
+              ? true
+              : false
+          }
+          helperText={
+            formik.touched.confirmPassword && formik.errors.confirmPassword
+          }
+          sx={{ marginBottom: '1rem' }}
+        />
+        <Button type="submit">Submit</Button>
+      </Box>
     </form>
   );
 };

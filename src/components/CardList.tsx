@@ -2,18 +2,21 @@ import { useState, useEffect, useContext, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import {
+  Paper,
   Button,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
+  IconButton,
   Table,
   TableHead,
   TableBody,
   TableRow,
   TableCell,
   TextField,
+  Typography,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -92,7 +95,15 @@ export const CardList = () => {
     return <div>Loading...</div>;
   } else {
     return (
-      <>
+      <Paper
+        sx={{
+          margin: {
+            xs: '1rem 0.5rem',
+            sm: '1rem 2rem',
+            md: '1rem 4rem',
+          },
+        }}
+      >
         <RemoveCardDialog
           open={isDialogOpen}
           onClose={closeDeleteDialog}
@@ -104,7 +115,9 @@ export const CardList = () => {
               <TableCell>Question</TableCell>
               <TableCell>Answer</TableCell>
               <TableCell>Hint</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell sx={{ paddingLeft: '2rem', width: '5rem' }}>
+                Actions
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -126,6 +139,9 @@ export const CardList = () => {
                 {editingCardIndex !== null && editingCardIndex === index && (
                   <TableRow>
                     <TableCell colSpan={4}>
+                      <Typography sx={{ marginBottom: '1rem' }} variant="body2">
+                        Editing card {index + 1}
+                      </Typography>
                       <EditCardForm
                         card={card}
                         onSubmit={handleEditCard}
@@ -138,7 +154,7 @@ export const CardList = () => {
             ))}
           </TableBody>
         </Table>
-      </>
+      </Paper>
     );
   }
 };
@@ -179,17 +195,20 @@ const CardRowActions = (props: CardRowActionsProps) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       {props.isEditing ? (
-        <Button onClick={props.closeEdit} aria-label="close edit form button">
+        <IconButton
+          onClick={props.closeEdit}
+          aria-label="close edit form button"
+        >
           <CloseIcon />
-        </Button>
+        </IconButton>
       ) : (
-        <Button onClick={props.openEdit} aria-label="open edit form button">
+        <IconButton onClick={props.openEdit} aria-label="open edit form button">
           <EditIcon />
-        </Button>
+        </IconButton>
       )}
-      <Button onClick={props.delete} aria-label="delete card button">
+      <IconButton onClick={props.delete} aria-label="delete card button">
         <DeleteOutlineIcon />
-      </Button>
+      </IconButton>
     </div>
   );
 };
@@ -234,6 +253,7 @@ const EditCardForm = (props: EditCardFormProps) => {
             value={formik.values.question || ''}
             onChange={formik.handleChange}
             required
+            sx={{ marginRight: '1rem' }}
           />
           <TextField
             id="edit-card-answer"
@@ -242,6 +262,7 @@ const EditCardForm = (props: EditCardFormProps) => {
             value={formik.values.answer || ''}
             onChange={formik.handleChange}
             required
+            sx={{ marginRight: '1rem' }}
           />
           <TextField
             id="edit-card-hint"
@@ -249,8 +270,11 @@ const EditCardForm = (props: EditCardFormProps) => {
             label="Hint"
             value={formik.values.hint || ''}
             onChange={formik.handleChange}
+            sx={{ marginRight: '1rem' }}
           />
-          <Button type="submit">Save</Button>
+          <Button type="submit" sx={{ marginTop: '0.5rem' }}>
+            Save
+          </Button>
         </Form>
       )}
     </Formik>

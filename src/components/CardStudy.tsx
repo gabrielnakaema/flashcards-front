@@ -1,9 +1,11 @@
 import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import {
+  Box,
   Button,
   Card as MatCard,
   CardActions as MatCardActions,
+  Typography,
 } from '@mui/material';
 import { getCardsFromDeck } from '../services/cardService';
 import { Card } from '../types';
@@ -52,20 +54,49 @@ export const CardStudy = () => {
   };
 
   if (numberOfCards === 0) {
-    return <div>Deck does not have any cards</div>;
+    return <Box>Deck does not have any cards</Box>;
   } else {
     return (
-      <div>
-        <MatCard>
-          {cards[currentCardIndex].question}
-          {isHintShown && <div>{cards[currentCardIndex].hint}</div>}
-          {isAnswerShown && <div>{cards[currentCardIndex].answer}</div>}
-          <MatCardActions>
+      <Box sx={{}}>
+        <MatCard
+          sx={{
+            margin: {
+              xs: '1rem 0.5rem',
+              sm: '1rem 2rem',
+              md: '1rem 4rem',
+            },
+            minHeight: '50vh',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <Typography sx={{ margin: '5rem auto' }} variant="h3">
+            {cards[currentCardIndex].question}
+          </Typography>
+          <Typography
+            sx={{
+              margin: '0 auto 3rem auto',
+              visibility: isHintShown ? 'visible' : 'hidden',
+            }}
+            variant="caption"
+          >
+            {cards[currentCardIndex].hint}
+          </Typography>
+          <Typography
+            sx={{
+              margin: '0 auto 5rem auto',
+              visibility: isAnswerShown ? 'visible' : 'hidden',
+            }}
+            variant="subtitle1"
+          >
+            {cards[currentCardIndex].answer}
+          </Typography>
+          <MatCardActions sx={{ margin: '1rem auto' }}>
             {isAnswerShown ? (
               <>
                 <Button
                   onClick={previousCard}
-                  style={{
+                  sx={{
                     visibility: currentCardIndex <= 0 ? 'hidden' : 'visible',
                   }}
                 >
@@ -75,7 +106,7 @@ export const CardStudy = () => {
 
                 <Button
                   onClick={nextCard}
-                  style={{
+                  sx={{
                     visibility:
                       currentCardIndex >= numberOfCards - 1
                         ? 'hidden'
@@ -91,22 +122,16 @@ export const CardStudy = () => {
                 <Button onClick={() => setIsAnswerShown(true)}>
                   Show answer
                 </Button>
-                <Button
-                  onClick={() => setIsHintShown(true)}
-                  style={{
-                    visibility:
-                      isHintShown || !cards[currentCardIndex].hint
-                        ? 'hidden'
-                        : 'visible',
-                  }}
-                >
-                  Show hint
-                </Button>
+                {cards[currentCardIndex].hint && (
+                  <Button onClick={() => setIsHintShown(true)}>
+                    Show hint
+                  </Button>
+                )}
               </>
             )}
           </MatCardActions>
         </MatCard>
-      </div>
+      </Box>
     );
   }
 };
