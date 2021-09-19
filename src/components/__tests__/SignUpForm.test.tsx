@@ -1,13 +1,32 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { AlertContext } from '../../contexts/AlertContext';
 import * as authService from '../../services/authService';
 import { SignUpForm } from '../SignUpForm';
-
+jest.mock('../../services/authService', () => {
+  return {
+    register: jest.fn(),
+  };
+});
+const setAlert = jest.fn();
 describe('Sign up form component', () => {
   let spy: jest.SpyInstance;
   beforeEach(() => {
     spy = jest.spyOn(authService, 'register');
-    render(<SignUpForm />);
+    render(
+      <AlertContext.Provider
+        value={{
+          setAlert,
+          alert: {
+            message: '',
+            type: 'success',
+            duration: 0,
+          },
+        }}
+      >
+        <SignUpForm />
+      </AlertContext.Provider>
+    );
   });
 
   it('should render the form', () => {

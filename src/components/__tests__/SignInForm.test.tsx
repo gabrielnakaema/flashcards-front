@@ -1,27 +1,39 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
+import { AlertContext } from '../../contexts/AlertContext';
 import { AuthContext } from '../../contexts/AuthContext';
 import { SignInForm } from '../SignInForm';
 
+const setAlert = jest.fn();
 describe('SignInForm', () => {
   let mockSignIn: jest.Mock;
 
   beforeEach(() => {
     mockSignIn = jest.fn();
     render(
-      <AuthContext.Provider
+      <AlertContext.Provider
         value={{
-          login: mockSignIn,
-          isAuthenticated: false,
-          user: { username: 'test' },
-          logout: () => {
-            return;
+          setAlert,
+          alert: {
+            message: '',
+            type: 'success',
+            duration: 0,
           },
         }}
       >
-        <SignInForm />
-      </AuthContext.Provider>
+        <AuthContext.Provider
+          value={{
+            login: mockSignIn,
+            isAuthenticated: false,
+            user: { username: 'test' },
+            logout: () => {
+              return;
+            },
+          }}
+        >
+          <SignInForm />
+        </AuthContext.Provider>
+      </AlertContext.Provider>
     );
   });
 

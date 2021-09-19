@@ -3,15 +3,33 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { CardForm } from '../CardForm';
 import * as cardService from '../../services/cardService';
-
+import { AlertContext } from '../../contexts/AlertContext';
+const setAlert = jest.fn();
+jest.mock('../../services/cardService', () => {
+  return {
+    createCards: jest.fn(),
+    updateCard: jest.fn(),
+  };
+});
 describe('card form component', () => {
   beforeEach(() => {
     render(
-      <MemoryRouter initialEntries={['/decks/1/cards/add']}>
-        <Route path="/decks/:deckId/cards/add">
-          <CardForm />
-        </Route>
-      </MemoryRouter>
+      <AlertContext.Provider
+        value={{
+          setAlert,
+          alert: {
+            message: '',
+            type: 'success',
+            duration: 0,
+          },
+        }}
+      >
+        <MemoryRouter initialEntries={['/decks/1/cards/add']}>
+          <Route path="/decks/:deckId/cards/add">
+            <CardForm />
+          </Route>
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
   });
 
@@ -28,8 +46,12 @@ describe('card form component', () => {
     });
   });
 
-  it('should initialize component with disabled submit button', () => {
-    expect(screen.getByRole('button', { name: /submit/i })).toBeDisabled();
+  it('should disable submit button after clicking submit on empty form', async () => {
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    userEvent.click(submitButton);
+    await waitFor(() => {
+      expect(submitButton).toBeDisabled();
+    });
   });
 
   it('should initialize component with a button with text "Blank card"', () => {
@@ -44,20 +66,23 @@ describe('card form component', () => {
     ).toBeInTheDocument();
   });
 
-  it('should add one button with text "Blank card" to the document after clicking "add card" button', () => {
+  it('should add one button with text "Blank card" to the document after clicking "add card" button', async () => {
     const previousButtons = screen.getAllByRole('button');
+
     userEvent.click(screen.getByRole('button', { name: /add card/i }));
-    const newButtons = screen.getAllByRole('button');
-    expect(newButtons.length).toBe(previousButtons.length + 1);
-    const blankCardButtons = screen.getAllByRole('button', {
-      name: /blank card/i,
+
+    const newButtons = await screen.findAllByRole('button');
+
+    await waitFor(() => {
+      expect(newButtons.length).toBe(previousButtons.length + 1);
     });
-    expect(blankCardButtons.length).toBe(2);
   });
 
-  it('should disable "submit" button after clicking "add card" button', () => {
+  it('should disable "submit" button after clicking "add card" button', async () => {
     userEvent.click(screen.getByRole('button', { name: /add card/i }));
-    expect(screen.getByRole('button', { name: /submit/i })).toBeDisabled();
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /submit/i })).toBeDisabled();
+    });
   });
 
   it('should enable submit button after typing question and answer input fields', async () => {
@@ -67,14 +92,11 @@ describe('card form component', () => {
       name: /submit/i,
     }) as HTMLButtonElement;
 
-    expect(submitButton).toBeTruthy();
-    expect(submitButton.disabled).toBe(true);
-
     userEvent.type(questionInput, 'questionTest');
     userEvent.type(answerInput, 'answerTest');
 
     await waitFor(() => {
-      expect(submitButton.disabled).toBe(false);
+      expect(submitButton).not.toBeDisabled();
     });
   });
 
@@ -93,9 +115,8 @@ describe('card form component', () => {
     userEvent.type(hintInput, 'TestingHint');
 
     await waitFor(() => {
-      expect(submitButton.disabled).toBe(false);
+      expect(submitButton).not.toBeDisabled();
     });
-
     userEvent.click(submitButton);
 
     await waitFor(() => {

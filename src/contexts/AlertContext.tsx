@@ -1,6 +1,5 @@
 import { createContext, useState } from 'react';
-import { Snackbar } from '@mui/material';
-import { Alert } from '@mui/lab';
+import { Snackbar, Alert } from '@mui/material';
 
 interface IAlertContext {
   alert: {

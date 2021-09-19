@@ -72,7 +72,6 @@ export const CardForm = () => {
             setAlert(extractErrorMessage(error), 'error', 3000);
           }
         }}
-        validateOnMount={true}
       >
         {(formik) => (
           <Form autoComplete="off">

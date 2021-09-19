@@ -4,7 +4,9 @@ import { Card } from '../../types';
 import { CardList } from '../CardList';
 import * as cardService from '../../services/cardService';
 import userEvent from '@testing-library/user-event';
-import { AlertProvider } from '../../contexts/AlertContext';
+import { AlertContext } from '../../contexts/AlertContext';
+const setAlert = jest.fn();
+
 jest.mock('../../services/cardService', () => {
   return {
     getCardsFromDeck: (_id: number | string) => {
@@ -41,13 +43,22 @@ describe('Card table component', () => {
   beforeEach(async () => {
     await waitFor(() => {
       render(
-        <AlertProvider>
+        <AlertContext.Provider
+          value={{
+            setAlert,
+            alert: {
+              message: '',
+              type: 'success',
+              duration: 0,
+            },
+          }}
+        >
           <MemoryRouter initialEntries={['/decks/1/cards/list']}>
             <Route path="/decks/:deckId/cards/list">
               <CardList />
             </Route>
           </MemoryRouter>
-        </AlertProvider>
+        </AlertContext.Provider>
       );
     });
   });
@@ -92,15 +103,17 @@ describe('Card table component', () => {
     expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
   });
 
-  it('should not call updateCard spy after clicking "Save" with the same initial data', () => {
+  it('should not call updateCard spy after clicking "Save" with the same initial data', async () => {
     const updateCardSpy = jest.spyOn(cardService, 'updateCard');
     const editButtons = screen.getAllByRole('button', { name: /edit/i });
-    editButtons[0].click();
+    userEvent.click(editButtons[0]);
 
     const saveButton = screen.getByRole('button', { name: /save/i });
-    saveButton.click();
+    userEvent.click(saveButton);
 
-    expect(updateCardSpy).not.toHaveBeenCalled();
+    await waitFor(() => {
+      expect(updateCardSpy).not.toHaveBeenCalled();
+    });
   });
 
   it('should call spy with correct arguments after editing one input field', async () => {

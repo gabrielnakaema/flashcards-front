@@ -55,7 +55,9 @@ describe('Card study component', () => {
   });
 
   it('should not show answer on initial', () => {
-    expect(screen.queryByText(MOCK_CARDS[0].answer)).not.toBeInTheDocument();
+    expect(screen.queryByText(MOCK_CARDS[0].answer)).toHaveStyle({
+      visibility: 'hidden',
+    });
   });
 
   it('should show answer on "Show answer" button click', () => {
