@@ -84,12 +84,77 @@ describe('card form component', () => {
       expect(newButtons.length).toBe(previousButtons.length + 2);
     });
   });
-
   it('should disable "submit" button after clicking "add card" button', async () => {
     userEvent.click(screen.getByRole('button', { name: /add card/i }));
     await waitFor(() => {
       expect(screen.getByRole('button', { name: /submit/i })).toBeDisabled();
     });
+  });
+
+  it('should reset inputs after clicking "add card" button', () => {
+    const questionInput = screen.getByLabelText(/question/i);
+    const answerInput = screen.getByLabelText(/answer/i);
+    const hintInput = screen.getByLabelText(/hint/i);
+
+    userEvent.type(questionInput, 'questionTest');
+    userEvent.type(answerInput, 'answerTest');
+    userEvent.type(hintInput, 'hintTest');
+
+    expect(questionInput).toHaveValue('questionTest');
+    expect(answerInput).toHaveValue('answerTest');
+    expect(hintInput).toHaveValue('hintTest');
+
+    userEvent.click(screen.getByRole('button', { name: /add card/i }));
+
+    expect(questionInput).toHaveValue('');
+    expect(answerInput).toHaveValue('');
+    expect(hintInput).toHaveValue('');
+  });
+
+  it('should not remove card from list after clicking remove card button if there is only one card', () => {
+    const previousButtons = screen.getAllByRole('button');
+
+    userEvent.click(screen.getByRole('button', { name: /remove card/i }));
+
+    const newButtons = screen.getAllByRole('button');
+
+    expect(newButtons.length).toBe(previousButtons.length);
+  });
+
+  it('should remove a card from list after clicking remove card button if there is more than one card', () => {
+    userEvent.click(screen.getAllByRole('button', { name: /add card/i })[0]);
+    userEvent.click(screen.getAllByRole('button', { name: /remove card/i })[0]);
+
+    const buttons = screen.getAllByRole('button', { name: /blank card/i });
+    expect(buttons.length).toBe(1);
+  });
+
+  it('should change input values when clicking a different card button', () => {
+    const questionInput = screen.getByLabelText(/question/i);
+    const answerInput = screen.getByLabelText(/answer/i);
+    const hintInput = screen.getByLabelText(/hint/i);
+
+    userEvent.type(questionInput, 'questionTest');
+    userEvent.type(answerInput, 'answerTest');
+    userEvent.type(hintInput, 'hintTest');
+
+    userEvent.click(screen.getByRole('button', { name: /add card/i }));
+
+    expect(questionInput).toHaveValue('');
+    expect(answerInput).toHaveValue('');
+    expect(hintInput).toHaveValue('');
+
+    const previousCardButton = screen.getByRole('button', {
+      name: 'questionTest',
+    });
+
+    expect(previousCardButton).toBeInTheDocument();
+
+    userEvent.click(previousCardButton);
+
+    expect(questionInput).toHaveValue('questionTest');
+    expect(answerInput).toHaveValue('answerTest');
+    expect(hintInput).toHaveValue('hintTest');
   });
 
   it('should enable submit button after typing question and answer input fields', async () => {

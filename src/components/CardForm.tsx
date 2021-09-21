@@ -247,6 +247,7 @@ const CardToBeAdded = (props: CardToBeAddedProps) => {
       <IconButton
         sx={{ marginLeft: 'auto', opacity: '50%' }}
         onClick={props.removeCard}
+        aria-label="remove card"
       >
         <DeleteOutlineIcon />
       </IconButton>
