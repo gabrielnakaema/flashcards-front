@@ -12,6 +12,15 @@ export const getCardsFromDeck = async (deckId: string | number) => {
   return response.data;
 };
 
+export const getRandomCardsFromDeck = async (deckId: string | number) => {
+  const response = await api.get<Card[]>(`/v1/decks/${deckId}/cards`, {
+    params: {
+      random: true,
+    },
+  });
+  return response.data;
+};
+
 export const createCards = async (
   deckId: string | number,
   cards: NewCard[]

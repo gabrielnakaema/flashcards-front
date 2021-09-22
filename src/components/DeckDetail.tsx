@@ -4,6 +4,7 @@ import {
   Card as MatCard,
   CardActions as MatCardActions,
   CardContent as MatCardContent,
+  Checkbox,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -22,6 +23,7 @@ export const DeckDetail = () => {
   const [details, setDetails] = useState<DeckDetails>();
   const { deckId } = useParams<{ deckId: string }>();
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [shouldShuffleCards, setShouldShuffleCards] = useState(false);
   const { setAlert } = useContext(AlertContext);
   const history = useHistory();
 
@@ -74,11 +76,25 @@ export const DeckDetail = () => {
             Added by {details.user.username}
             <br />
             This deck contains {details.cardCount} cards
+            <Box>
+              <label htmlFor="shuffle-cards-checkbox">Shuffle cards</label>
+
+              <Checkbox
+                id="shuffle-cards-checkbox"
+                checked={shouldShuffleCards}
+                onChange={(e) => setShouldShuffleCards(!shouldShuffleCards)}
+              />
+            </Box>
           </MatCardContent>
+
           <MatCardActions>
             <Button
               component={RouterLink}
-              to={`/decks/${details.id}/cards/study`}
+              to={
+                shouldShuffleCards
+                  ? `/decks/${details.id}/cards/study?shuffle=true`
+                  : `/decks/${details.id}/cards/study`
+              }
               style={{ visibility: !details.cardCount ? 'hidden' : 'visible' }}
             >
               Study now!

@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { useParams, Link as RouterLink } from 'react-router-dom';
+import { useParams, Link as RouterLink, useLocation } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -8,10 +8,17 @@ import {
   Typography,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { getCardsFromDeck } from '../services/cardService';
+import {
+  getCardsFromDeck,
+  getRandomCardsFromDeck,
+} from '../services/cardService';
 import { Card } from '../types';
 import { AlertContext } from '../contexts/AlertContext';
 import { extractErrorMessage } from '../utils/exceptions/extractMessage';
+
+export const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+};
 
 export const CardStudy = () => {
   const { deckId } = useParams<{ deckId: string }>();
@@ -21,17 +28,24 @@ export const CardStudy = () => {
   const [isHintShown, setIsHintShown] = useState<boolean>(false);
   const { setAlert } = useContext(AlertContext);
   const numberOfCards = cards.length;
+  const searchParams = useQuery();
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const cards = await getCardsFromDeck(deckId);
-        setCards(cards);
+        if (searchParams.get('shuffle')) {
+          const cards = await getRandomCardsFromDeck(deckId);
+          setCards(cards);
+        } else {
+          const cards = await getCardsFromDeck(deckId);
+          setCards(cards);
+        }
       } catch (error) {
         setAlert(extractErrorMessage(error), 'error', 3000);
       }
     }
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deckId, setAlert]);
 
   const nextCard = () => {
