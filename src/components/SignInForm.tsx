@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from '../contexts/AuthContext';
@@ -45,7 +45,7 @@ export const SignInForm = () => {
     <Box
       sx={{
         maxWidth: {
-          xs: '450px',
+          xs: '375px',
         },
         margin: {
           xs: '1rem',
@@ -54,14 +54,18 @@ export const SignInForm = () => {
         textAlign: 'center',
       }}
     >
-      <Typography variant="h6">Sign in</Typography>
+      <Typography variant="h6">Sign in to your account</Typography>
       <form onSubmit={formik.handleSubmit}>
-        <Box
+        <Stack
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
             marginTop: '1rem',
+            border: '1px solid',
+            borderColor: '#eee',
+            padding: '1.5rem',
+            borderRadius: '5px',
+            backgroundColor: '#fefefe',
           }}
+          spacing="1.5rem"
         >
           <TextField
             id="username-field"
@@ -71,7 +75,7 @@ export const SignInForm = () => {
             onChange={handleChange}
             error={formik.touched.username && Boolean(formik.errors.username)}
             helperText={formik.touched.username && formik.errors.username}
-            sx={{ marginBottom: '1rem' }}
+            sx={{ backgroundColor: '#fff' }}
           />
           <TextField
             id="password-field"
@@ -82,18 +86,16 @@ export const SignInForm = () => {
             onChange={handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
-            sx={{ marginBottom: '1rem' }}
+            sx={{ backgroundColor: '#fff' }}
           />
-          <Box>
-            <Button type="button" component={RouterLink} to="/" color="error">
-              Cancel
-            </Button>
-            <Button type="submit" sx={{ marginLeft: '1rem' }}>
-              Submit
-            </Button>
-          </Box>
-        </Box>
+          <Button type="submit" fullWidth variant="contained">
+            Sign in
+          </Button>
+        </Stack>
       </form>
+      <Typography sx={{ marginTop: '1.5rem' }}>
+        Don't have an account? <RouterLink to="/signup">Create one!</RouterLink>
+      </Typography>
     </Box>
   );
 };

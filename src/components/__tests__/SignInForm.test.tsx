@@ -43,13 +43,15 @@ describe('SignInForm', () => {
   it('should render the form', () => {
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/username/i)).toBeInTheDocument();
-    expect(screen.getByText(/submit/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /sign in/i })
+    ).toBeInTheDocument();
   });
 
   it('should call login function on submit', async () => {
     const usernameInput = screen.getByLabelText(/username/i);
     const passwordInput = screen.getByLabelText(/password/i);
-    const submitButton = screen.getByText(/submit/i);
+    const submitButton = screen.getByRole('button', { name: /sign in/i });
 
     userEvent.type(usernameInput, 'testusername');
     userEvent.type(passwordInput, 'testpassword');
@@ -63,7 +65,7 @@ describe('SignInForm', () => {
   it('should show error for at least 6 character password on submit form with short password', async () => {
     const usernameInput = screen.getByLabelText(/username/i);
     const passwordInput = screen.getByLabelText(/password/i);
-    const submitButton = screen.getByText(/submit/i);
+    const submitButton = screen.getByRole('button', { name: /sign in/i });
 
     userEvent.type(usernameInput, 'testusername');
     userEvent.type(passwordInput, 'test');

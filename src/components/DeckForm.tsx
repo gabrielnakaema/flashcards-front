@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AlertContext } from '../contexts/AlertContext';
@@ -61,12 +61,16 @@ export const DeckForm = () => {
     >
       <Typography variant="h6">Create deck</Typography>
       <form onSubmit={formik.handleSubmit}>
-        <Box
+        <Stack
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
             marginTop: '1rem',
+            border: '1px solid',
+            borderColor: '#eee',
+            padding: '1.5rem',
+            borderRadius: '5px',
+            backgroundColor: '#fefefe',
           }}
+          spacing="1.5rem"
         >
           <TextField
             id="title-field"
@@ -76,7 +80,6 @@ export const DeckForm = () => {
             onChange={handleChange}
             error={formik.touched.title && Boolean(formik.errors.title)}
             helperText={formik.touched.title && formik.errors.title}
-            sx={{ marginBottom: '1rem' }}
           />
           <TextField
             id="description-field"
@@ -88,17 +91,35 @@ export const DeckForm = () => {
               formik.touched.description && Boolean(formik.errors.description)
             }
             helperText={formik.touched.description && formik.errors.description}
-            sx={{ marginBottom: '1rem' }}
           />
-          <Box>
+          <Box
+            sx={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: {
+                xs: 'column-reverse',
+                sm: 'row',
+              },
+            }}
+          >
             <Button type="button" component={RouterLink} to="/" color="error">
               Cancel
             </Button>
-            <Button type="submit" sx={{ marginLeft: '1rem' }}>
+            <Button
+              type="submit"
+              sx={{
+                marginLeft: {
+                  xs: 0,
+                  sm: '1.5rem',
+                },
+                flex: '1 0 auto',
+              }}
+              variant="contained"
+            >
               Submit
             </Button>
           </Box>
-        </Box>
+        </Stack>
       </form>
     </Box>
   );

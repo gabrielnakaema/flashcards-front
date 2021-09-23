@@ -1,6 +1,5 @@
 import { useContext } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AlertContext } from '../contexts/AlertContext';
@@ -63,7 +62,7 @@ export const SignUpForm = () => {
     <Box
       sx={{
         maxWidth: {
-          xs: '450px',
+          xs: '375px',
         },
         margin: {
           xs: '1rem',
@@ -74,12 +73,16 @@ export const SignUpForm = () => {
     >
       <Typography variant="h6">Sign up</Typography>
       <form onSubmit={formik.handleSubmit}>
-        <Box
+        <Stack
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
             marginTop: '1rem',
+            border: '1px solid',
+            borderColor: '#eee',
+            padding: '1.5rem',
+            borderRadius: '5px',
+            backgroundColor: '#fefefe',
           }}
+          spacing="1.5rem"
         >
           <TextField
             id="name-field"
@@ -89,7 +92,6 @@ export const SignUpForm = () => {
             onChange={handleChange}
             error={formik.touched.name && formik.errors.name ? true : false}
             helperText={formik.touched.name && formik.errors.name}
-            sx={{ marginBottom: '1rem' }}
           />
           <TextField
             id="username-field"
@@ -101,7 +103,6 @@ export const SignUpForm = () => {
               formik.touched.username && formik.errors.username ? true : false
             }
             helperText={formik.touched.username && formik.errors.username}
-            sx={{ marginBottom: '1rem' }}
           />
           <TextField
             id="password-field"
@@ -114,7 +115,6 @@ export const SignUpForm = () => {
               formik.touched.password && formik.errors.password ? true : false
             }
             helperText={formik.touched.password && formik.errors.password}
-            sx={{ marginBottom: '1rem' }}
           />
           <TextField
             id="confirm-password-field"
@@ -131,17 +131,11 @@ export const SignUpForm = () => {
             helperText={
               formik.touched.confirmPassword && formik.errors.confirmPassword
             }
-            sx={{ marginBottom: '1rem' }}
           />
-          <Box>
-            <Button type="button" component={RouterLink} to="/" color="error">
-              Cancel
-            </Button>
-            <Button type="submit" sx={{ marginLeft: '1rem' }}>
-              Submit
-            </Button>
-          </Box>
-        </Box>
+          <Button type="submit" fullWidth variant="contained">
+            Sign up
+          </Button>
+        </Stack>
       </form>
     </Box>
   );

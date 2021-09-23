@@ -37,7 +37,9 @@ describe('Sign up form component', () => {
     expect(screen.getByLabelText('Username')).toBeInTheDocument();
     expect(screen.getByLabelText('Password')).toBeInTheDocument();
     expect(screen.getByLabelText('Confirm password')).toBeInTheDocument();
-    expect(screen.getByText('Submit')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /sign up/i })
+    ).toBeInTheDocument();
   });
 
   it('should call register function on submit', async () => {
@@ -51,7 +53,7 @@ describe('Sign up form component', () => {
     userEvent.type(screen.getByLabelText('Password'), password);
     userEvent.type(screen.getByLabelText('Confirm password'), confirmPassword);
 
-    userEvent.click(await screen.findByText(/submit/i));
+    userEvent.click(await screen.findByRole('button', { name: /sign up/i }));
 
     await waitFor(() => {
       expect(spy).toHaveBeenCalledWith({
@@ -64,7 +66,7 @@ describe('Sign up form component', () => {
   });
 
   it('should show required errors on field when submitting with empty form', async () => {
-    userEvent.click(screen.getByText(/submit/i));
+    userEvent.click(screen.getByRole('button', { name: /sign up/i }));
 
     expect(await screen.findAllByText(/required/i)).toHaveLength(4);
   });
@@ -80,7 +82,7 @@ describe('Sign up form component', () => {
     userEvent.type(screen.getByLabelText('Password'), password);
     userEvent.type(screen.getByLabelText('Confirm password'), confirmPassword);
 
-    userEvent.click(screen.getByText(/submit/i));
+    userEvent.click(screen.getByRole('button', { name: /sign up/i }));
 
     await waitFor(() => {
       expect(screen.getByText(/must match/i)).toBeInTheDocument();
@@ -98,7 +100,7 @@ describe('Sign up form component', () => {
     userEvent.type(screen.getByLabelText('Password'), password);
     userEvent.type(screen.getByLabelText('Confirm password'), confirmPassword);
 
-    userEvent.click(screen.getByText(/submit/i));
+    userEvent.click(screen.getByRole('button', { name: /sign up/i }));
 
     // error should have "password" and "at least 6 characters" with anything in between
     await waitFor(() => {
@@ -119,7 +121,7 @@ describe('Sign up form component', () => {
     userEvent.type(screen.getByLabelText('Password'), password);
     userEvent.type(screen.getByLabelText('Confirm password'), confirmPassword);
 
-    userEvent.click(screen.getByText(/submit/i));
+    userEvent.click(screen.getByRole('button', { name: /sign up/i }));
 
     // error should have "username" and "at least 5 characters" with anything in between
     await waitFor(() => {
